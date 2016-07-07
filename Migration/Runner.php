@@ -4,7 +4,7 @@ namespace Migration;
 
 use Nette\Object;
 use DibiConnection;
-use Nette\DateTime;
+use Nette\Utils\Strings;
 
 /**
  * <code>
@@ -211,7 +211,10 @@ class Runner extends Object
 		}
 		foreach ($migrations as $m)
 		{
-			throw new Exception("{$m->file} se smazal.");
+			if (!Strings::endsWith($m->file, '.testdata.sql'))
+			{
+				throw new Exception("{$m->file} se smazal.");
+			}
 		}
 		return $toExecute;
 	}
